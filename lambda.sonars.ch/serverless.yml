@@ -1,0 +1,27 @@
+service: sonars
+
+frameworkVersion: "3"
+
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  cars:
+    timeout: 15
+    handler: src/api/cars.handler
+    events:
+      - http:
+          path: /api/cars
+          method: GET
+          cors: true
+      - http:
+          path: /api/cars/{make}
+          method: GET
+          cors: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
